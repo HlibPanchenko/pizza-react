@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux/es/exports"; 
+import React, { useRef, useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux/es/exports";
 import { setSort } from "../redux/slices/filterSlice";
 
 export const list = [
@@ -12,20 +12,37 @@ export const list = [
 ];
 
 export const Sort = () => {
-// достаем sort с filterSlice
-const sort = useSelector(state => state.filterSlice.sort)
-const dispatch = useDispatch()
+  // достаем sort с filterSlice
+  const sort = useSelector((state) => state.filterSlice.sort);
+  const dispatch = useDispatch();
+  const sortRef = useRef();
 
   const [open, setOpen] = useState(false);
-  
 
   const onClickItem = (obj) => {
-    dispatch(setSort(obj))
+    dispatch(setSort(obj));
     setOpen(false);
   };
 
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (!e.composedPath().includes(sortRef.current)) {
+        setOpen(false);
+      }
+    };
+
+    document.body.addEventListener("click", handleClickOutside);
+
+    // когда компонент умрет, удалится (когда мы перейдем на другую страницу), мы удалим листенер
+    // это называется unmount
+    // когда мы уйдем со страницы, и компонент будет удаляться, выполним этот кусок кода
+    return () => {
+      document.body.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+
   return (
-    <div className="sort">
+    <div ref={sortRef} className="sort">
       <div className="sort__label">
         <svg
           width="10"

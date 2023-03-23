@@ -60,10 +60,10 @@ const Home = () => {
   useEffect(()=>{
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1)) // substring чтобы удалить знак ?
-      console.log(params); //{categoryId: '3', currentPage: '1', sortType: 'title'}
+      // console.log(params); //{categoryId: '3', currentPage: '1', sortType: 'title'}
 
       const sort = list.find(obj=>obj.sort == params.sortType)
-      console.log(sort);
+      // console.log(sort);
       dispatch(setFilters({
         ...params,
         sort

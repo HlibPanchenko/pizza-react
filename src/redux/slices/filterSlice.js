@@ -34,6 +34,3 @@ export const { setCategoryId, setSort, setCurrentPage, setFilters } =
   filterSlice.actions;
 export default filterSlice.reducer;
 
-console.log(filterSlice.reducer);
-
-console.log(filterSlice.actions);
