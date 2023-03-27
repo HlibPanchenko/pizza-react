@@ -1,19 +1,25 @@
 import React from "react";
 import styles from "./Search.module.scss";
-import { SearchContext } from "../../App";
+// import { SearchContext } from "../../App";
+import {  useDispatch } from "react-redux/es/exports";
+import {setSearchValue} from "../../redux/slices/filterSlice";
 import debounce from "lodash.debounce";
 
 const Search = () => {
+  const dispatch = useDispatch();
+
+
   // сделали локальный контролируемый инпут, в который сразу будем записывать value с инпута
   const [value, setValue] = React.useState('')
-  const {setSearchValue } = React.useContext(SearchContext);
+  // const {setSearchValue } = React.useContext(SearchContext);
 
   // сохранили ссылку на функцию и сделали ее отложенной
   // будем вызывать эту функции каждый раз когда меняется инпут
   const updateSearchValue = React.useCallback(
     debounce((str) => {
       // через 350мс будем записывать новое значение в состояние инпута, которое хранится в контексте
-      setSearchValue(str);
+      // setSearchValue(str);
+      dispatch(setSearchValue(str))
     }, 350), []
   );
 

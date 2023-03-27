@@ -23,7 +23,7 @@ const Home = () => {
   const sortType = useSelector((state) => state.filterSlice.sort.sort);
   const currentPage = useSelector((state) => state.filterSlice.currentPage);
   const { items, status } = useSelector((state) => state.pizzaSlice);
-
+  const searchValue = useSelector(state=>state.filterSlice.seacrhValue)
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -36,7 +36,7 @@ const Home = () => {
     dispatch(setCurrentPage(number));
   };
 
-  const { searchValue } = React.useContext(SearchContext);
+  // const { searchValue } = React.useContext(SearchContext);
   const skeletonArr = [...Array(8)];
 
 

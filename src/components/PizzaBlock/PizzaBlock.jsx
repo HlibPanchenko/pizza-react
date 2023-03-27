@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux/es/exports";
-import { addItem } from "../../redux/slices/cartSlice";
-
+import { addItem, selectCart } from "../../redux/slices/cartSlice";
+import { selectCartItem } from "../../redux/slices/cartSlice";
 const typeNames = ["тонкое", "традиционное"];
 
 const PizzaBlock = (props) => {
   const { category, imageUrl, id, price, rating, sizes, title, types } = props;
-  const cartItem = useSelector((state) =>
-    state.cartSlice.items.find((obj) => obj.id == id)
-  );
+  // const cartItem = useSelector((state) =>
+  //   state.cartSlice.items.find((obj) => obj.id == id)
+  // );
+  const cartItem = useSelector(selectCartItem(id));
   // const [pizzaCount, setPizzaCount] = useState(0);
   const [activeType, setActiveType] = useState(0);
   const [activeSize, setActiveSize] = useState(0);

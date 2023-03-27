@@ -1,13 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux/es/exports";
-import { clearItems } from "../redux/slices/cartSlice";
+import { clearItems, selectCart } from "../redux/slices/cartSlice";
 import CartItem from "../components/CartItem";
 import CarEmpty from "../components/CarEmpty";
 
 const Drawer = () => {
   // get all pizzas
-  const {items, totalPrice} = useSelector((state) => state.cartSlice);
+  const {items, totalPrice} = useSelector(selectCart);
 
 	const totalCount = items.reduce((sum, item) => {return item.count + sum}, 0)
 
