@@ -1,13 +1,14 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import React from "react";
 import "./scss/app.scss"; // стили для этого компонента
-import Header from "./components/Header";
-import Home from "./pages/Home";
+ import Home from "./pages/Home";
 import Drawer from "./pages/Drawer";
 import NotFound from "./pages/NotFound";
 import { useState } from "react";
 // import pizzas from "../src/assets/pizza.json";
 import { useSelector, useDispatch } from "react-redux";
+import FullPizza from "./pages/FullPizza";
+import MainLayout from "./layouts/MainLayout";
 
 // export const SearchContext = React.createContext("");
 
@@ -17,17 +18,14 @@ function App() {
   // const dispatch = useDispatch()
 
   return (
-    <div className="wrapper">
-      {/* <Header searchValue={searchValue} setSearchValue={setSearchValue} /> */}
-      <Header />
-      <div className="content">
-        <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/drawer" element={<Drawer />}></Route>
-          <Route path="*" element={<NotFound />}></Route>
-        </Routes>
-      </div>
-    </div>
+    <Routes>
+      <Route path="/" element={<MainLayout />}>
+        <Route path="" element={<Home />}></Route>
+        <Route path="drawer" element={<Drawer />}></Route>
+        <Route path="pizza/:idOfPizza" element={<FullPizza />}></Route>
+        <Route path="*" element={<NotFound />}></Route>
+      </Route>
+    </Routes>
   );
 }
 
