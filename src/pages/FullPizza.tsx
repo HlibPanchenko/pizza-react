@@ -2,10 +2,21 @@ import React from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-const FullPizza = () => {
-  const [pizza, setPizza] = React.useState();
+
+
+const FullPizza: React.FC = () => {
+  const [pizza, setPizza] = React.useState<{
+    imageUrl: string;
+    title: string;
+    price: number;
+  }>({
+    imageUrl: '',
+    title: '',
+    price: 0
+  });
+
   const params = useParams();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   React.useEffect(() => {
     async function getOnePizza() {
@@ -17,18 +28,18 @@ const FullPizza = () => {
         setPizza(res.data);
       } catch (error) {
         console.log("ошибка получения данных одной пиццы", error);
-        navigate('/')
+        navigate("/");
       }
     }
     getOnePizza();
   }, []);
 
   // пока пицца не загрузилась, покажем загрузку.
-  // если не будет этого, то у нас будет ошибка, потому что мы будем 
+  // если не будет этого, то у нас будет ошибка, потому что мы будем
   //пытаться достать imageUrl, title и price из pizza, которой еще нет
 
   if (!pizza) {
-	return 'Загрузка...'
+    return <>Загрузка...</>;
   }
 
   return (

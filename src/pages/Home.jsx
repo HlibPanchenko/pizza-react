@@ -2,7 +2,6 @@ import React from "react";
 import { useEffect, useState } from "react";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
-import { SearchContext } from "../App";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
