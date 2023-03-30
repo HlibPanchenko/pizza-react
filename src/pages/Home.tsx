@@ -17,27 +17,26 @@ import {
 import { fetchPizzas } from "../redux/slices/pizzaSlice";
 import { list } from "../components/Sort";
 
-const Home = () => {
-  const categoryId = useSelector((state) => state.filterSlice.categoryId);
-  const sortType = useSelector((state) => state.filterSlice.sort.sort);
-  const currentPage = useSelector((state) => state.filterSlice.currentPage);
-  const { items, status } = useSelector((state) => state.pizzaSlice);
-  const searchValue = useSelector(state=>state.filterSlice.seacrhValue)
+const Home: React.FC = () => {
+  const categoryId = useSelector((state:any) => state.filterSlice.categoryId);
+  const sortType = useSelector((state:any) => state.filterSlice.sort.sort);
+  const currentPage = useSelector((state:any) => state.filterSlice.currentPage);
+  const { items, status } = useSelector((state:any) => state.pizzaSlice);
+  const searchValue = useSelector((state:any) => state.filterSlice.seacrhValue);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const onChangeCategory = (id) => {
+  const onChangeCategory = (id: number) => {
     console.log(id);
     dispatch(setCategoryId(id));
   };
 
-  const onChangePage = (number) => {
+  const onChangePage = (number: number) => {
     dispatch(setCurrentPage(number));
   };
 
   // const { searchValue } = React.useContext(SearchContext);
   const skeletonArr = [...Array(8)];
-
 
   const getPizzas = async () => {
     const order = sortType.includes("-") ? "asc" : "desc";
@@ -53,8 +52,16 @@ const Home = () => {
       // );
       // dispatch(setItems(res.data));
       // выще мы говорили: "дай данные и отправь их в редакс"
-       // теперь мы сразу получаем данные и сохраняем ихimage.png
-      dispatch(fetchPizzas({ order, sortBy, category, search, currentPage })); 
+      // теперь мы сразу получаем данные и сохраняем ихimage.png
+      dispatch(
+        //@ts-ignore
+        fetchPizzas({ 
+          order,
+           sortBy, 
+           category, 
+           search, 
+           currentPage 
+          }));
     } catch (error) {
       console.log("не смогли получить пиццу с бекенда", error);
     }
@@ -127,9 +134,7 @@ const Home = () => {
       {status == "error" ? (
         <div className="content__error-info">
           <h2>Произошла ошибка</h2>
-          <p>
-            Не удалось получить пиццы.
-          </p>
+          <p>Не удалось получить пиццы.</p>
         </div>
       ) : (
         <div className="content__items">
@@ -137,7 +142,7 @@ const Home = () => {
             ? skeletonArr.map((_, index) => <Skeleton key={index} />)
             : items
                 // .filter(pizza=> pizza.title.toLowerCase().includes(searchValue.toLo erCase()))
-                .map((pizza) => <PizzaBlock key={pizza.id} {...pizza} />)}
+                .map((pizza:any) => <PizzaBlock key={pizza.id} {...pizza} />)}
         </div>
       )}
       <Pagination currentPage={currentPage} onChangePage={onChangePage} />

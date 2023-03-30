@@ -5,8 +5,17 @@ import { addItem, selectCart } from "../../redux/slices/cartSlice";
 import { selectCartItem } from "../../redux/slices/cartSlice";
 const typeNames = ["тонкое", "традиционное"];
 
-const PizzaBlock = (props) => {
-  const { category, imageUrl, id, price, rating, sizes, title, types } = props;
+type PizzaBlockProps = {
+  imageUrl: string;
+  id: string;
+  price: number;
+  rating: number;
+  sizes: number[];
+  title: string;
+  types: number[];
+};
+
+const PizzaBlock:React.FC<PizzaBlockProps> = ({ imageUrl, id, price, rating, sizes, title, types }) => {
   // const cartItem = useSelector((state) =>
   //   state.cartSlice.items.find((obj) => obj.id == id)
   // );

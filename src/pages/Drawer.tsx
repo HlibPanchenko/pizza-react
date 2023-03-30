@@ -5,11 +5,11 @@ import { clearItems, selectCart } from "../redux/slices/cartSlice";
 import CartItem from "../components/CartItem";
 import CarEmpty from "../components/CarEmpty";
 
-const Drawer = () => {
+const Drawer:React.FC  = () => {
   // get all pizzas
   const {items, totalPrice} = useSelector(selectCart);
 
-	const totalCount = items.reduce((sum, item) => {return item.count + sum}, 0)
+	const totalCount = items.reduce((sum:number, item:any) => {return item.count + sum}, 0)
 
 
   const dispatch = useDispatch();
@@ -101,7 +101,7 @@ const Drawer = () => {
         </div>
 
         <div className="content__items">
-          {items.map((item) => (
+          {items.map((item:any) => (
             <CartItem {...item} key={item.id}/>
           ))}
         </div>

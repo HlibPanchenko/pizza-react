@@ -7,7 +7,7 @@ import NotFound from "./pages/NotFound";
 import { useState } from "react";
 // import pizzas from "../src/assets/pizza.json";
 import { useSelector, useDispatch } from "react-redux";
-import FullPizza from "./pages/FullPizza.tsx";
+import FullPizza from "./pages/FullPizza";
 import MainLayout from "./layouts/MainLayout";
 
 // export const SearchContext = React.createContext("");

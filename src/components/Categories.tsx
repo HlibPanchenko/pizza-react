@@ -8,9 +8,16 @@ const arrCategories = [
   "Острые",
   "Закрытые",
 ];
+// создадим тп для свойств
+type CategoriesProps = {
+  categoryId: number;
+  onClickCategory: any; // функции будем типизировать потом
+};
 
-const Categories = ({onClickCategory, categoryId}) => {
-
+const Categories: React.FC<CategoriesProps> = ({
+  onClickCategory,
+  categoryId,
+}) => {
   // const onClickCategory = (index) => {
   //   setActiveIndex(index);
   // };

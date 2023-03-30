@@ -2,7 +2,14 @@ import React, { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux/es/exports";
 import { setSort } from "../redux/slices/filterSlice";
 
-export const list = [
+//создадим свой тип
+type listItem = {
+  name: string; 
+  sort: string
+}
+
+// тип массив объектов
+export const list: listItem[] = [
   { name: "популярности(DESC)", sort: "rating" },
   { name: "популярности(ASC)", sort: "-rating" },
   { name: "цене(DESC)", sort: "price" },
@@ -13,19 +20,19 @@ export const list = [
 
 export const Sort = () => {
   // достаем sort с filterSlice
-  const sort = useSelector((state) => state.filterSlice.sort);
+  const sort = useSelector((state:any) => state.filterSlice.sort);
   const dispatch = useDispatch();
-  const sortRef = useRef();
+  const sortRef = useRef<HTMLDivElement>(null);
 
   const [open, setOpen] = useState(false);
 
-  const onClickItem = (obj) => {
+  const onClickItem = (obj:listItem) => {
     dispatch(setSort(obj));
     setOpen(false);
   };
 
   useEffect(() => {
-    const handleClickOutside = (e) => {
+    const handleClickOutside = (e:any) => {
       if (!e.composedPath().includes(sortRef.current)) {
         setOpen(false);
       }
