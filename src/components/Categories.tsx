@@ -11,7 +11,7 @@ const arrCategories = [
 // создадим тп для свойств
 type CategoriesProps = {
   categoryId: number;
-  onClickCategory: any; // функции будем типизировать потом
+  onClickCategory: (i: number) => void;
 };
 
 const Categories: React.FC<CategoriesProps> = ({

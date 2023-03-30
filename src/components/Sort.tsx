@@ -8,6 +8,16 @@ type listItem = {
   sort: string
 }
 
+// type PopupClick = React.MouseEvent<HTMLBodyElement> & {
+//   path: Node[]
+// }
+
+type PopupEvent = MouseEvent & {
+  path: Node[]; 
+  composedPath: (tar?: HTMLElement) => EventTarget[]; 
+  target: HTMLElement; 
+}
+
 // тип массив объектов
 export const list: listItem[] = [
   { name: "популярности(DESC)", sort: "rating" },
@@ -32,8 +42,9 @@ export const Sort = () => {
   };
 
   useEffect(() => {
-    const handleClickOutside = (e:any) => {
-      if (!e.composedPath().includes(sortRef.current)) {
+    const handleClickOutside = (e:MouseEvent) => {
+      const _event = e as PopupEvent;
+      if (sortRef.current && !_event.composedPath().includes(sortRef.current)) {
         setOpen(false);
       }
     };
