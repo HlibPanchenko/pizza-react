@@ -2,7 +2,7 @@ import React from "react";
 import { useEffect, useState } from "react";
 import qs from "qs";
 import { useNavigate } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux/es/exports";
+import { useSelector } from "react-redux/es/exports";
 
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import Categories from "../components/Categories";
@@ -16,15 +16,25 @@ import {
 } from "../redux/slices/filterSlice";
 import { fetchPizzas } from "../redux/slices/pizzaSlice";
 import { list } from "../components/Sort";
+import { RootState, useAppDispatch } from "../redux/store";
 
 const Home: React.FC = () => {
-  const categoryId = useSelector((state:any) => state.filterSlice.categoryId);
-  const sortType = useSelector((state:any) => state.filterSlice.sort.sort);
-  const currentPage = useSelector((state:any) => state.filterSlice.currentPage);
-  const { items, status } = useSelector((state:any) => state.pizzaSlice);
-  const searchValue = useSelector((state:any) => state.filterSlice.seacrhValue);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
+
+  const categoryId = useSelector(
+    (state: RootState) => state.filterSlice.categoryId
+  );
+  const sortType = useSelector(
+    (state: RootState) => state.filterSlice.sort.sort
+  );
+  const currentPage = useSelector(
+    (state: RootState) => state.filterSlice.currentPage
+  );
+  const { items, status } = useSelector((state: RootState) => state.pizzaSlice);
+  const searchValue = useSelector(
+    (state: RootState) => state.filterSlice.seacrhValue
+  );
 
   const onChangeCategory = (id: number) => {
     console.log(id);
@@ -54,14 +64,14 @@ const Home: React.FC = () => {
       // выще мы говорили: "дай данные и отправь их в редакс"
       // теперь мы сразу получаем данные и сохраняем ихimage.png
       dispatch(
-        //@ts-ignore
-        fetchPizzas({ 
+        fetchPizzas({
           order,
-           sortBy, 
-           category, 
-           search, 
-           currentPage 
-          }));
+          sortBy,
+          category,
+          search,
+          currentPage: String(currentPage),
+        })
+      );
     } catch (error) {
       console.log("не смогли получить пиццу с бекенда", error);
     }
@@ -83,11 +93,14 @@ const Home: React.FC = () => {
       // console.log(params); //{categoryId: '3', currentPage: '1', sortType: 'title'}
 
       const sort = list.find((obj) => obj.sort == params.sortType);
-      // console.log(sort);
+      // console.log(sort); //{ name: "популярности(DESC)", sort: "rating" }
+      
+      
       dispatch(
         setFilters({
           ...params,
           sort,
+          // sort?: sort,
         })
       );
     }
@@ -142,7 +155,7 @@ const Home: React.FC = () => {
             ? skeletonArr.map((_, index) => <Skeleton key={index} />)
             : items
                 // .filter(pizza=> pizza.title.toLowerCase().includes(searchValue.toLo erCase()))
-                .map((pizza:any) => <PizzaBlock key={pizza.id} {...pizza} />)}
+                .map((pizza: any) => <PizzaBlock key={pizza.id} {...pizza} />)}
         </div>
       )}
       <Pagination currentPage={currentPage} onChangePage={onChangePage} />

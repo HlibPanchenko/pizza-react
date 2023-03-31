@@ -5,7 +5,8 @@ import { setSort } from "../redux/slices/filterSlice";
 //создадим свой тип
 type listItem = {
   name: string; 
-  sort: string
+  // sort: string
+  sort: "rating" | "-rating" | "price" | "-price" | "title" | "-title";
 }
 
 // type PopupClick = React.MouseEvent<HTMLBodyElement> & {
