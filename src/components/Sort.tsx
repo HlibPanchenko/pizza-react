@@ -29,7 +29,7 @@ export const list: listItem[] = [
   { name: "алфавиту(ASC)", sort: "-title" },
 ];
 
-export const Sort = () => {
+export const Sort:React.FC = React.memo(() => {
   // достаем sort с filterSlice
   const sort = useSelector((state:any) => state.filterSlice.sort);
   const dispatch = useDispatch();
@@ -95,6 +95,6 @@ export const Sort = () => {
       )}
     </div>
   );
-};
+})
 
 export default Sort;

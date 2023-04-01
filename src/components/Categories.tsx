@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useWhyDidYouUpdate } from "ahooks";
 
 const arrCategories = [
   "Все",
@@ -14,29 +15,32 @@ type CategoriesProps = {
   onClickCategory: (i: number) => void;
 };
 
-const Categories: React.FC<CategoriesProps> = ({
-  onClickCategory,
-  categoryId,
-}) => {
-  // const onClickCategory = (index) => {
-  //   setActiveIndex(index);
-  // };
+const Categories: React.FC<CategoriesProps> = React.memo(
+  ({ onClickCategory, categoryId }) => {
+    // const onClickCategory = (index) => {
+    //   setActiveIndex(index);
+    // };
 
-  return (
-    <div className="categories">
-      <ul>
-        {arrCategories.map((item, index) => (
-          <li
-            key={index}
-            onClick={() => onClickCategory(index)}
-            className={categoryId == index ? "active" : ""}
-          >
-            {item}
-          </li>
-        ))}
-      </ul>
-    </div>
-  );
-};
+    useWhyDidYouUpdate("Categories", {
+      onClickCategory,
+      categoryId,
+    });
 
+    return (
+      <div className="categories">
+        <ul>
+          {arrCategories.map((item, index) => (
+            <li
+              key={index}
+              onClick={() => onClickCategory(index)}
+              className={categoryId == index ? "active" : ""}
+            >
+              {item}
+            </li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+);
 export default Categories;

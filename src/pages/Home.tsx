@@ -36,10 +36,14 @@ const Home: React.FC = () => {
     (state: RootState) => state.filterSlice.seacrhValue
   );
 
-  const onChangeCategory = (id: number) => {
-    console.log(id);
+  // const onChangeCategory = (id: number) => {
+  //   console.log(id);
+  //   dispatch(setCategoryId(id));
+  // };
+
+  const onChangeCategory = React.useCallback((id: number) => {
     dispatch(setCategoryId(id));
-  };
+  }, [])
 
   const onChangePage = (number: number) => {
     dispatch(setCurrentPage(number));
@@ -141,7 +145,7 @@ const Home: React.FC = () => {
           categoryId={categoryId}
           onClickCategory={onChangeCategory}
         />
-        <Sort />
+        <Sort/>
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {status == "error" ? (
