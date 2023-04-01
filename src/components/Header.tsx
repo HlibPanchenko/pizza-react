@@ -3,14 +3,26 @@ import { Link, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux/es/exports";
 import Search from "./Search/Search";
 import { selectCart } from "../redux/slices/cartSlice";
+import React, { useEffect } from "react";
 
 function Header() {
   const { items, totalPrice } = useSelector(selectCart);
   const location = useLocation();
-  // console.log(location);
+  const isMounted = React.useRef(false);
   const totalCount = items.reduce((sum: number, item: any) => {
     return item.count + sum;
   }, 0);
+
+  useEffect(() => {
+    // при первом рендеринге компонента мы ничего не должны сохранять в LS
+    // при первом рендере не отработает потому что  isMounted.current = false
+    if (isMounted.current) {
+      const json = JSON.stringify(items);
+      localStorage.setItem("cart", json);
+      
+    }
+    isMounted.current = true;
+  }, [items]);
 
   return (
     <div className="header">

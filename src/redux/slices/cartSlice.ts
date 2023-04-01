@@ -1,4 +1,7 @@
 import { createSlice,PayloadAction  } from "@reduxjs/toolkit";
+import { json } from "stream/consumers";
+import { calcTotalPrice } from "../../utils/calcTotalPrice";
+import { getCartFromLS } from "../../utils/getCartFromLocalStorage";
 import { RootState } from "../store";
 
 
@@ -19,9 +22,11 @@ interface CartSliceState {
   items: CartItem[];
 }
 
+const cartData = getCartFromLS()
+
 const initialState:CartSliceState = {
-  totalPrice: 0,
-  items: [],
+  totalPrice: cartData.totalPrice,
+  items: cartData.items
 };
 
 export const cartSlice = createSlice({
@@ -44,9 +49,11 @@ export const cartSlice = createSlice({
         });
       }
 
-      state.totalPrice = state.items.reduce((sum, obj) => {
-        return obj.price * obj.count + sum;
-      }, 0);
+      // state.totalPrice = state.items.reduce((sum, obj) => {
+      //   return obj.price * obj.count + sum;
+      // }, 0);
+
+      state.totalPrice = calcTotalPrice(state.items)
     },
     removeItem(state, action:PayloadAction<string>) {
       // в payload будем передавать id пиццы

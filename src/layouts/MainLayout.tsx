@@ -7,10 +7,11 @@ const MainLayout:React.FC = () => {
     <div className="wrapper">
       <Header />
 		<div className="content">
-		<Outlet/> // тут будет рендериться один из роутов
+		<Outlet/> 
 		</div>
     </div>
   );
 };
 
+// в <Outlet/>  будет рендериться один из роутов
 export default MainLayout;
