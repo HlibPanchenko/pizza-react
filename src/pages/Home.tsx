@@ -7,8 +7,9 @@ import { useSelector } from "react-redux/es/exports";
 import PizzaBlock from "../components/PizzaBlock/PizzaBlock";
 import Categories from "../components/Categories";
 import Sort from "../components/Sort";
-import Skeleton from "../components/PizzaBlock/Skeleton";
-import Pagination from "../components/Pagination/Pagination";
+// import Skeleton from "../components/PizzaBlock/Skeleton";
+// import Pagination from "../components/Pagination/Pagination";
+import {Skeleton, Pagination} from "../components";
 import {
   setCategoryId,
   setCurrentPage,

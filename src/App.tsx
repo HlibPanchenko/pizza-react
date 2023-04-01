@@ -1,14 +1,23 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
-import React from "react";
+import React, { Suspense } from "react";
 import "./scss/app.scss"; // стили для этого компонента
- import Home from "./pages/Home";
-import Drawer from "./pages/Drawer";
-import NotFound from "./pages/NotFound";
-import { useState } from "react";
-// import pizzas from "../src/assets/pizza.json";
-import { useSelector, useDispatch } from "react-redux";
-import FullPizza from "./pages/FullPizza";
 import MainLayout from "./layouts/MainLayout";
+
+import Home from "./pages/Home";
+// import Drawer from "./pages/Drawer";
+// import NotFound from "./pages/NotFound";
+// import FullPizza from "./pages/FullPizza";
+
+// React.lazy будет подгружать файл './pages/Drawer', если компонент Drawer отрендерится
+const Drawer = React.lazy(
+  () => import(/* webpackChunkName: "Drawer" */ "./pages/Drawer")
+);
+const NotFound = React.lazy(
+  () => import(/* webpackChunkName: "NotFound" */ "./pages/NotFound")
+);
+const FullPizza = React.lazy(
+  () => import(/* webpackChunkName: "FullPizza" */ "./pages/FullPizza")
+);
 
 // export const SearchContext = React.createContext("");
 
@@ -21,9 +30,31 @@ function App() {
     <Routes>
       <Route path="/" element={<MainLayout />}>
         <Route path="" element={<Home />}></Route>
-        <Route path="drawer" element={<Drawer />}></Route>
-        <Route path="pizza/:idOfPizza" element={<FullPizza />}></Route>
-        <Route path="*" element={<NotFound />}></Route>
+        <Route
+          path="drawer"
+          element={
+            // пока компонент еще не загрузился будет показываться - fallback={<div>Загрузка...</div>
+            <Suspense fallback={<div>Загрузка корзины...</div>}>
+              <Drawer />
+            </Suspense>
+          }
+        ></Route>
+        <Route
+          path="pizza/:idOfPizza"
+          element={
+            <Suspense fallback={<div>Загрузка этой пиццы...</div>}>
+              <FullPizza />
+            </Suspense>
+          }
+        ></Route>
+        <Route
+          path="*"
+          element={
+            <Suspense fallback={<div>Ошибка...</div>}>
+              <NotFound />
+            </Suspense>
+          }
+        ></Route>
       </Route>
     </Routes>
   );
